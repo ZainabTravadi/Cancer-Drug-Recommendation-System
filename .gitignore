@@ -1,0 +1,31 @@
+﻿# Ignore virtual environment
+venv/
+
+# Ignore raw and large data files
+data/
+
+# Ignore large binary formats and model weights
+*.dll
+*.lib
+*.csv
+*.zip
+*.tar.gz
+*.h5
+*.pt
+*.pkl
+*.ckpt
+
+# Ignore Jupyter Notebook checkpoints
+.ipynb_checkpoints/
+
+# Ignore log files
+*.log
+
+# Ignore system files
+.DS_Store
+Thumbs.db
+
+# Python cache
+__pycache__/
+*.py[cod]
+data/raw/GDSC/public_raw_data/public_raw_data_gdsc2.csv
