@@ -1,0 +1,79 @@
+{
+  "BRCA1": [
+    {
+      "name": "Olaparib (Lynparza)",
+      "ic50": "0.22 nM",
+      "confidence": 85,
+      "description": "PARP inhibitor particularly effective in BRCA-mutated cancers. Prevents DNA repair in cancer cells.",
+      "mechanism": "PARP enzyme inhibitor",
+      "sideEffects": "Nausea, fatigue, anemia",
+      "clinicalTrial": "Phase III OlympiAD"
+    }
+  ],
+  "EGFR": [
+    {
+      "name": "Osimertinib (Tagrisso)",
+      "ic50": "0.15 nM",
+      "confidence": 88,
+      "description": "EGFR tyrosine kinase inhibitor effective against T790M resistance mutations in NSCLC.",
+      "mechanism": "EGFR tyrosine kinase inhibitor",
+      "sideEffects": "Diarrhea, rash, nail toxicity",
+      "clinicalTrial": "Phase III FLAURA study"
+    }
+  ],
+  "HER2": [
+    {
+      "name": "Trastuzumab (Herceptin)",
+      "ic50": "0.08 nM",
+      "confidence": 91,
+      "description": "Monoclonal antibody targeting HER2 protein overexpressed in breast cancers.",
+      "mechanism": "HER2 receptor antagonist",
+      "sideEffects": "Cardiotoxicity, infusion reactions",
+      "clinicalTrial": "Phase III HERA study"
+    }
+  ],
+  "PD-L1": [
+    {
+      "name": "Atezolizumab (Tecentriq)",
+      "ic50": "0.20 nM",
+      "confidence": 87,
+      "description": "PD-L1 inhibitor enhancing immune system response in NSCLC and triple-negative breast cancer.",
+      "mechanism": "Immune checkpoint inhibitor",
+      "sideEffects": "Immune-related adverse events",
+      "clinicalTrial": "IMpower110 trial"
+    }
+  ],
+  "KRAS": [
+    {
+      "name": "Sotorasib (Lumakras)",
+      "ic50": "0.17 nM",
+      "confidence": 83,
+      "description": "KRAS G12C inhibitor used in NSCLC patients with specific KRAS mutation.",
+      "mechanism": "KRAS G12C covalent inhibitor",
+      "sideEffects": "Diarrhea, nausea, fatigue",
+      "clinicalTrial": "CodeBreaK 100 trial"
+    }
+  ],
+  "ALK": [
+    {
+      "name": "Alectinib (Alecensa)",
+      "ic50": "0.13 nM",
+      "confidence": 90,
+      "description": "Targeted therapy for ALK-positive NSCLC, crosses blood-brain barrier effectively.",
+      "mechanism": "ALK tyrosine kinase inhibitor",
+      "sideEffects": "Constipation, fatigue, edema",
+      "clinicalTrial": "ALEX trial"
+    }
+  ],
+  "PIK3CA": [
+    {
+      "name": "Alpelisib (Piqray)",
+      "ic50": "0.25 nM",
+      "confidence": 84,
+      "description": "PI3K inhibitor used for advanced breast cancer with PIK3CA mutation.",
+      "mechanism": "PI3K-alpha selective inhibitor",
+      "sideEffects": "Hyperglycemia, rash, diarrhea",
+      "clinicalTrial": "SOLAR-1 trial"
+    }
+  ]
+}

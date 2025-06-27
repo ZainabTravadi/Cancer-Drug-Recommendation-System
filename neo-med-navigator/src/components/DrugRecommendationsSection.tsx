@@ -1,8 +1,15 @@
 
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Card } from '@/components/ui/card';
 
 const DrugRecommendationsSection = () => {
+  const [loading, setLoading] = useState(true);
+
+  // Simulate loading delay (e.g., fetching or processing data)
+  useEffect(() => {
+    const timer = setTimeout(() => setLoading(false), 2000); // 2.5 seconds
+    return () => clearTimeout(timer);
+  }, []);
   const recommendations = [
     {
       id: 1,
@@ -67,6 +74,43 @@ const DrugRecommendationsSection = () => {
     if (confidence >= 80) return "bg-yellow-500/20 border-yellow-500/30";
     return "bg-orange-500/20 border-orange-500/30";
   };
+
+  if (loading) {
+  return (
+    <section className="min-h-screen flex flex-col justify-center items-center bg-slate-900 text-white">
+      <div className="custom-loader mb-6" />
+      <p className="text-xl text-violet-300 animate-pulse">
+        Analyzing your genomic data...
+      </p>
+
+      <style>{`
+        .custom-loader {
+          width: 64px;
+          height: 64px;
+          border: 5px solid transparent;
+          border-top: 5px solid #8b5cf6; /* violet-500 */
+          border-right: 5px solid #ec4899; /* pink-500 */
+          border-radius: 50%;
+          animation: spin 1s linear infinite, glow 1.5s ease-in-out infinite alternate;
+        }
+
+        @keyframes spin {
+          to { transform: rotate(360deg); }
+        }
+
+        @keyframes glow {
+          0% {
+            box-shadow: 0 0 10px #8b5cf6, 0 0 20px #ec4899;
+          }
+          100% {
+            box-shadow: 0 0 20px #8b5cf6, 0 0 30px #ec4899;
+          }
+        }
+      `}</style>
+    </section>
+  );
+}
+
 
   return (
     <section id="recommendations" className="py-20 bg-slate-900">

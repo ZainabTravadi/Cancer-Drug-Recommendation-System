@@ -2,6 +2,17 @@
 import React from 'react';
 
 const HeroSection = () => {
+  const handleSubmit = () => {
+
+  // ✅ Navigate 
+  window.location.hash = "upload";
+};
+const handleLearnMore = () => {
+
+  // ✅ Navigate 
+  window.location.hash = "faq";
+};
+
   return (
     <section className="min-h-screen flex items-center justify-center relative overflow-hidden bg-cyber-gradient">
       {/* Animated background elements */}
@@ -26,7 +37,7 @@ const HeroSection = () => {
           </p>
 
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-            <button className="neon-button animate-glow-pulse group">
+            <button className="neon-button animate-glow-pulse group" onClick={handleSubmit}>
               <span className="flex items-center gap-2">
                 📊 Upload Report & Get Recommendations
                 <svg className="w-5 h-5 transform group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -35,7 +46,7 @@ const HeroSection = () => {
               </span>
             </button>
             
-            <button className="bg-transparent border-2 border-violet-500/50 text-violet-300 font-semibold py-3 px-8 rounded-lg hover:bg-violet-500/10 transition-all duration-300">
+            <button className="bg-transparent border-2 border-violet-500/50 text-violet-100 font-semibold py-3 px-8 rounded-lg hover:bg-violet-500 transition-all duration-300" onClick={handleLearnMore}>
               Learn More
             </button>
           </div>

@@ -1,18 +1,18 @@
-
 import React, { useState } from 'react';
 import { Card } from '@/components/ui/card';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue
+} from '@/components/ui/select';
 
 const DataUploadSection = () => {
   const [uploadedFile, setUploadedFile] = useState<File | null>(null);
   const [cancerType, setCancerType] = useState('');
-
-  const handleFileUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const file = event.target.files?.[0];
-    if (file) {
-      setUploadedFile(file);
-    }
-  };
+  const [notes, setNotes] = useState('');
+  const [dragActive, setDragActive] = useState(false);
 
   const cancerTypes = [
     'Breast Cancer',
@@ -24,6 +24,48 @@ const DataUploadSection = () => {
     'Brain Cancer',
     'Kidney Cancer'
   ];
+
+  const handleFileUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (file) {
+      if (file.size > 50 * 1024 * 1024) {
+        alert('❌ File size exceeds 50MB limit.');
+        return;
+      }
+      setUploadedFile(file);
+    }
+  };
+
+  const handleDrop = (e: React.DragEvent<HTMLLabelElement>) => {
+    e.preventDefault();
+    setDragActive(false);
+    const file = e.dataTransfer.files?.[0];
+    if (file) {
+      if (file.size > 50 * 1024 * 1024) {
+        alert('❌ File size exceeds 50MB limit.');
+        return;
+      }
+      setUploadedFile(file);
+    }
+  };
+
+  const handleDragOver = (e: React.DragEvent<HTMLLabelElement>) => {
+    e.preventDefault();
+    setDragActive(true);
+  };
+
+  const handleDragLeave = () => {
+    setDragActive(false);
+  };
+
+  const handleSubmit = () => {
+  if (!uploadedFile || !cancerType) return;
+
+  // ✅ Navigate to recommendations section without reloading
+  window.location.hash = "recommendations";
+};
+
+
 
   return (
     <section id="upload" className="py-20 bg-dark-gradient">
@@ -43,23 +85,40 @@ const DataUploadSection = () => {
           {/* Genomic Data Upload */}
           <Card className="cyber-card">
             <h3 className="text-2xl font-bold mb-6 text-violet-300">Genomic Data File</h3>
-            
-            <div className="border-2 border-dashed border-violet-500/30 rounded-xl p-8 text-center hover:border-violet-500/50 transition-colors">
+
+            <div
+              className={`border-2 border-dashed rounded-xl p-8 text-center transition-colors ${
+                dragActive ? 'border-violet-500/70' : 'border-violet-500/30 hover:border-violet-500/50'
+              }`}
+            >
               <input
                 type="file"
                 accept=".vcf,.txt,.csv"
                 onChange={handleFileUpload}
                 className="hidden"
                 id="genomic-upload"
+                aria-label="Upload Genomic File"
               />
-              <label htmlFor="genomic-upload" className="cursor-pointer">
+
+              <label
+                htmlFor="genomic-upload"
+                onDrop={handleDrop}
+                onDragOver={handleDragOver}
+                onDragLeave={handleDragLeave}
+                className="cursor-pointer block"
+              >
                 <div className="mb-4">
                   <svg className="w-16 h-16 mx-auto text-violet-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"
+                    />
                   </svg>
                 </div>
                 <p className="text-lg font-semibold text-white mb-2">
-                  {uploadedFile ? uploadedFile.name : 'Drop your genomic file here'}
+                  {uploadedFile ? uploadedFile.name : 'Drop or click to upload genomic file'}
                 </p>
                 <p className="text-slate-400">
                   Supports VCF, TXT, CSV formats (Max 50MB)
@@ -71,9 +130,10 @@ const DataUploadSection = () => {
               <div className="mt-4 p-4 bg-violet-500/10 rounded-lg border border-violet-500/20">
                 <div className="flex items-center justify-between">
                   <span className="text-sm text-violet-300">✓ File uploaded successfully</span>
-                  <button 
+                  <button
                     onClick={() => setUploadedFile(null)}
                     className="text-slate-400 hover:text-white"
+                    aria-label="Remove uploaded file"
                   >
                     ✕
                   </button>
@@ -85,10 +145,13 @@ const DataUploadSection = () => {
           {/* Cancer Type Selection */}
           <Card className="cyber-card">
             <h3 className="text-2xl font-bold mb-6 text-pink-300">Cancer Type</h3>
-            
+
             <div className="space-y-6">
               <Select value={cancerType} onValueChange={setCancerType}>
-                <SelectTrigger className="w-full bg-slate-700/50 border-violet-500/30 text-white">
+                <SelectTrigger
+                  className="w-full bg-slate-700/50 border-violet-500/30 text-white"
+                  aria-label="Cancer Type Selector"
+                >
                   <SelectValue placeholder="Select cancer type" />
                 </SelectTrigger>
                 <SelectContent className="bg-slate-800 border-violet-500/30">
@@ -103,22 +166,34 @@ const DataUploadSection = () => {
               <div className="bg-slate-700/30 rounded-lg p-4">
                 <h4 className="font-semibold text-cyan-300 mb-2">Additional Information</h4>
                 <textarea
-                  placeholder="Patient history, current treatments, or other relevant details..."
-                  className="w-full bg-transparent border border-slate-600 rounded-lg p-3 text-white placeholder-slate-400 focus:border-violet-500 focus:outline-none"
-                  rows={4}
+                    placeholder="Patient history, current treatments, or other relevant details..."
+                    className="w-full bg-transparent border border-slate-600 rounded-lg p-3 text-white placeholder-slate-400 focus:border-violet-500 focus:outline-none"
+                    rows={4}
+                    aria-label="Additional information"
+                    value={notes}
+                    onChange={(e) => setNotes(e.target.value)}
                 />
+
               </div>
             </div>
           </Card>
         </div>
 
         <div className="text-center mt-12">
-          <button 
+          <button
             className="neon-button disabled:opacity-50 disabled:cursor-not-allowed"
             disabled={!uploadedFile || !cancerType}
+            onClick={handleSubmit}
+            aria-label="Analyze and Generate Recommendations"
           >
             🧬 Analyze Data & Generate Recommendations
           </button>
+
+          {(!uploadedFile || !cancerType) && (
+            <p className="text-sm text-slate-400 mt-2">
+              Please upload a file and select a cancer type to proceed.
+            </p>
+          )}
         </div>
       </div>
     </section>
