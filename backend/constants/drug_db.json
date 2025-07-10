@@ -1,0 +1,16 @@
+[
+  {
+    "name": "Pembrolizumab (Keytruda)",
+    "mechanism": "Immune checkpoint inhibitor",
+    "IC50": "0.12 nM",
+    "side_effects": "Mild to moderate immune-related adverse events",
+    "clinical_evidence": "Phase III KEYNOTE-189"
+  },
+  {
+    "name": "Erlotinib",
+    "mechanism": "EGFR inhibitor",
+    "IC50": "0.08 nM",
+    "side_effects": "Rash, diarrhea",
+    "clinical_evidence": "Phase II study in NSCLC"
+  }
+]

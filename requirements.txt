@@ -14,3 +14,8 @@ scipy
 streamlit
 openpyxl
 jupyterlab
+fastapi
+uvicorn
+python-multipart
+
+

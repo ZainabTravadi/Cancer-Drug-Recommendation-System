@@ -1,52 +1,22 @@
-# C:\Users\DELL\Desktop\Cancer Drug System\backend\utils\file_handler.py
+# utils/file_handler.py
 
-import pandas as pd
-import io
-import vcf  # You may need to install this: pip install PyVCF
+import os
+import uuid
 
-ALLOWED_EXTENSIONS = ['.vcf', '.csv', '.txt']
+ALLOWED_EXTENSIONS = {".txt", ".csv", ".vcf"}
+UPLOAD_FOLDER = "uploaded_files"
 
-def validate_file_extension(filename: str):
-    if not any(filename.endswith(ext) for ext in ALLOWED_EXTENSIONS):
-        raise ValueError(f"Unsupported file type: {filename}. Allowed types are: {ALLOWED_EXTENSIONS}")
+def save_upload_file(upload_file, destination_folder=UPLOAD_FOLDER):
+    os.makedirs(destination_folder, exist_ok=True)
 
-async def read_file_contents(file):
-    filename = file.filename
+    _, ext = os.path.splitext(upload_file.filename)
+    if ext.lower() not in ALLOWED_EXTENSIONS:
+        raise ValueError(f"Unsupported file type: {ext}")
 
-    # Read the raw bytes
-    content = await file.read()
-    
-    # Case: CSV or TXT (tab/comma-separated tables)
-    if filename.endswith('.csv'):
-        df = pd.read_csv(io.StringIO(content.decode("utf-8")))
-        return df
-    
-    elif filename.endswith('.txt'):
-        try:
-            df = pd.read_csv(io.StringIO(content.decode("utf-8")), sep=None, engine='python')
-        except Exception:
-            df = pd.read_table(io.StringIO(content.decode("utf-8")), delimiter='\t')
-        return df
+    unique_filename = f"{uuid.uuid4().hex}{ext}"
+    file_path = os.path.join(destination_folder, unique_filename)
 
-    # Case: VCF (Variant Call Format)
-    elif filename.endswith('.vcf'):
-        vcf_reader = vcf.Reader(io.StringIO(content.decode("utf-8")))
-        records = []
+    with open(file_path, "wb") as buffer:
+        buffer.write(upload_file.file.read())
 
-        for record in vcf_reader:
-            records.append({
-                'chrom': record.CHROM,
-                'pos': record.POS,
-                'id': record.ID,
-                'ref': record.REF,
-                'alt': str(record.ALT[0]) if record.ALT else None,
-                'qual': record.QUAL,
-                'filter': record.FILTER,
-                'info': dict(record.INFO)
-            })
-
-        df = pd.DataFrame(records)
-        return df
-
-    else:
-        raise ValueError("Unsupported file type")
+    return file_path
