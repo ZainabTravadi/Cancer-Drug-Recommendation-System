@@ -6,7 +6,7 @@ SUPPORTED_EXTENSIONS = [".txt", ".csv", ".vcf"]
 def preprocess_file(file_path: str) -> list[str]:
     """
     Preprocess the uploaded genomic file and extract gene/mutation features.
-    
+
     Args:
         file_path (str): Path to the saved genomic file.
 
@@ -21,15 +21,16 @@ def preprocess_file(file_path: str) -> list[str]:
     genes = []
 
     if ext == ".txt":
-        with open(file_path, "r") as f:
-            for line in f:
-                gene = line.strip()
-                if gene:
-                    genes.append(gene)
+        try:
+            df = pd.read_csv(file_path)
+            if "Gene" in df.columns:
+                genes = df["Gene"].dropna().astype(str).tolist()
+        except Exception as e:
+            print(f"❌ Error parsing .txt file: {e}")
 
     elif ext == ".csv":
         df = pd.read_csv(file_path)
-        col = df.columns[0]  # Assume first column has gene names
+        col = df.columns[0]
         genes = df[col].dropna().astype(str).tolist()
 
     elif ext == ".vcf":
@@ -38,7 +39,7 @@ def preprocess_file(file_path: str) -> list[str]:
                 if not line.startswith("#"):
                     parts = line.strip().split("\t")
                     if len(parts) > 3:
-                        gene = parts[3]  # Simplified extraction
+                        gene = parts[3]  # Simplified
                         genes.append(gene)
 
     return genes

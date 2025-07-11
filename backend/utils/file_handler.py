@@ -1,22 +1,39 @@
-# utils/file_handler.py
-
 import os
 import uuid
+from fastapi import UploadFile
+from typing import Literal
+import shutil
 
+UPLOAD_DIR = "temp_uploads"
 ALLOWED_EXTENSIONS = {".txt", ".csv", ".vcf"}
-UPLOAD_FOLDER = "uploaded_files"
 
-def save_upload_file(upload_file, destination_folder=UPLOAD_FOLDER):
-    os.makedirs(destination_folder, exist_ok=True)
+def ensure_folder_exists(folder_path: str):
+    os.makedirs(folder_path, exist_ok=True)
 
-    _, ext = os.path.splitext(upload_file.filename)
-    if ext.lower() not in ALLOWED_EXTENSIONS:
-        raise ValueError(f"Unsupported file type: {ext}")
+def get_extension(file: UploadFile) -> str:
+    _, ext = os.path.splitext(file.filename)
+    return ext.lower()
 
-    unique_filename = f"{uuid.uuid4().hex}{ext}"
-    file_path = os.path.join(destination_folder, unique_filename)
+def validate_extension(ext: str):
+    if ext not in ALLOWED_EXTENSIONS:
+        raise ValueError(f"❌ Unsupported file type: {ext}")
+
+async def save_temp_file(file: UploadFile, destination: Literal["temp", "uploads"] = "temp") -> str:
+    """
+    Saves the uploaded file temporarily and returns the path.
+    Handles .vcf/.csv/.txt and checks format.
+    """
+    ext = get_extension(file)
+    validate_extension(ext)
+
+    folder = UPLOAD_DIR if destination == "temp" else "uploaded_files"
+    ensure_folder_exists(folder)
+
+    filename = f"{uuid.uuid4().hex}{ext}"
+    file_path = os.path.join(folder, filename)
 
     with open(file_path, "wb") as buffer:
-        buffer.write(upload_file.file.read())
+        contents = await file.read()
+        buffer.write(contents)
 
     return file_path

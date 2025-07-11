@@ -1,5 +1,4 @@
-
-import React from 'react';
+import React, { useState } from 'react';
 import Navbar from '@/components/Navbar';
 import HeroSection from '@/components/HeroSection';
 import DataUploadSection from '@/components/DataUploadSection';
@@ -9,12 +8,14 @@ import FAQSection from '@/components/FAQSection';
 import Footer from '@/components/Footer';
 
 const Index = () => {
+  const [recommendations, setRecommendations] = useState([]);
+
   return (
     <div className="min-h-screen bg-slate-900">
       <Navbar />
       <HeroSection />
-      <DataUploadSection />
-      <DrugRecommendationsSection />
+      <DataUploadSection setRecommendations={setRecommendations} />
+      <DrugRecommendationsSection recommendations={recommendations} />
       <AIExplainabilitySection />
       <FAQSection />
       <Footer />

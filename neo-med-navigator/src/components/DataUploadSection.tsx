@@ -8,7 +8,11 @@ import {
   SelectValue
 } from '@/components/ui/select';
 
-const DataUploadSection = () => {
+type DataUploadSectionProps = {
+  setRecommendations: React.Dispatch<React.SetStateAction<any[]>>;
+};
+
+const DataUploadSection: React.FC<DataUploadSectionProps> = ({ setRecommendations }) => {
   const [uploadedFile, setUploadedFile] = useState<File | null>(null);
   const [cancerType, setCancerType] = useState('');
   const [notes, setNotes] = useState('');
@@ -58,14 +62,41 @@ const DataUploadSection = () => {
     setDragActive(false);
   };
 
-  const handleSubmit = () => {
-  if (!uploadedFile || !cancerType) return;
+  const handleSubmit = async () => {
+    if (!uploadedFile || !cancerType) {
+      alert("📋 Please upload a file and select a cancer type.");
+      return;
+    }
 
-  // ✅ Navigate to recommendations section without reloading
-  window.location.hash = "recommendations";
-};
+    const formData = new FormData();
+    formData.append("file", uploadedFile);
+    formData.append("cancer_type", cancerType);
+    formData.append("notes", notes);
 
+    try {
+      const response = await fetch("http://localhost:8000/analyze", {
+        method: "POST",
+        body: formData,
+      });
 
+      const data = await response.json();
+
+      if (!response.ok) {
+        console.error("❌ Backend returned error:", data);
+        alert(`❌ ${data.detail || "Server error. Please try again."}`);
+        return;
+      }
+
+      console.log("✅ AI Recommendations:", data);
+      setRecommendations(data);
+
+      // Scroll to recommendation section
+      window.location.hash = "recommendations";
+    } catch (error) {
+      console.error("❌ Error uploading data:", error);
+      alert("❌ Failed to connect to server. Please try again.");
+    }
+  };
 
   return (
     <section id="upload" className="py-20 bg-dark-gradient">
@@ -166,14 +197,13 @@ const DataUploadSection = () => {
               <div className="bg-slate-700/30 rounded-lg p-4">
                 <h4 className="font-semibold text-cyan-300 mb-2">Additional Information</h4>
                 <textarea
-                    placeholder="Patient history, current treatments, or other relevant details..."
-                    className="w-full bg-transparent border border-slate-600 rounded-lg p-3 text-white placeholder-slate-400 focus:border-violet-500 focus:outline-none"
-                    rows={4}
-                    aria-label="Additional information"
-                    value={notes}
-                    onChange={(e) => setNotes(e.target.value)}
+                  placeholder="Patient history, current treatments, or other relevant details..."
+                  className="w-full bg-transparent border border-slate-600 rounded-lg p-3 text-white placeholder-slate-400 focus:border-violet-500 focus:outline-none"
+                  rows={4}
+                  aria-label="Additional information"
+                  value={notes}
+                  onChange={(e) => setNotes(e.target.value)}
                 />
-
               </div>
             </div>
           </Card>
