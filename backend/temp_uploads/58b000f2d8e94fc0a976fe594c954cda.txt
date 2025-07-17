@@ -1,0 +1,8 @@
+PatientID,Gene,MutationType,Chromosome,Position,Reference,Alternate
+P001,TP53,Missense,17,7579472,G,A
+P001,BRCA1,Nonsense,17,41276045,C,T
+P002,EGFR,Deletion,7,55249071,ATG,-
+P002,ALK,Fusion,2,29443623,G,GGCT
+P003,KRAS,Missense,12,25398285,G,T
+P004,PIK3CA,Insertion,3,178952085,-,T
+P005,BRCA2,Splice_Site,13,32936732,A,G

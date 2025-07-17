@@ -1,0 +1,13 @@
+# Patient Genomic Report
+Patient ID: P123456
+Age: 54
+Gender: Female
+Cancer Type: Breast Cancer
+
+Detected Mutations:
+- BRCA1
+- BRCA2
+- TP53
+- PIK3CA
+- HER2 Amplification
+

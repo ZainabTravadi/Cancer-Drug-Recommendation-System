@@ -1,41 +1,27 @@
-# services/recommender.py
-
 import json
-from typing import Dict, List
-from models.schemas import DrugRecommendation
+import os
 
-DRUG_DB_PATH = "constants/drug_db.json"
+# Path to your drug DB
+DRUG_DB_PATH = os.path.join(os.path.dirname(__file__), '../constants/drug_db.json')
 
-def recommend_top_drugs(drug_scores: Dict[str, float]) -> List[DrugRecommendation]:
+# Load it once when this module is imported
+with open(DRUG_DB_PATH, 'r', encoding='utf-8') as f:
+    DRUG_DATABASE = json.load(f)
+
+def recommend_top_drugs(drug_scores, top_n=5):
     """
-    Match drug scores with drug info from JSON and return top 5 recommendations.
+    Select top N drugs from DRUG_DATABASE based on `drug_scores` dict.
+    `drug_scores` = {'DrugName': score, ...}
     """
-    with open(DRUG_DB_PATH, "r", encoding="utf-8") as f:
-        drug_db = json.load(f)
+    # Attach score to each drug in DB
+    scored_drugs = []
+    for drug in DRUG_DATABASE:
+        name = drug.get("name")
+        if name in drug_scores:
+            drug_copy = drug.copy()
+            drug_copy["confidence"] = round(drug_scores[name], 2)
+            scored_drugs.append(drug_copy)
 
-    recommendations = []
-
-    for drug_name, score in drug_scores.items():
-        # Find drug info from DB
-        drug_info = next((drug for drug in drug_db if drug["name"] == drug_name), None)
-        if not drug_info:
-            continue
-
-        recommendation = DrugRecommendation(
-            rank=0,  # Will be assigned later
-            name=drug_name,
-            confidence=f"{round(score * 100)}%",
-            IC50=drug_info.get("IC50", "N/A"),
-            description=drug_info.get("description", ""),
-            mechanism=drug_info.get("mechanism", ""),
-            side_effects=drug_info.get("side_effects", ""),
-            clinical_evidence=drug_info.get("clinical_evidence", "")
-        )
-        recommendations.append(recommendation)
-
-    # Sort and assign rank
-    recommendations.sort(key=lambda x: float(x.confidence.strip('%')), reverse=True)
-    for idx, rec in enumerate(recommendations[:5]):
-        rec.rank = idx + 1
-
-    return recommendations[:5]
+    # Sort by score and return top N
+    scored_drugs.sort(key=lambda x: x['confidence'], reverse=True)
+    return scored_drugs[:top_n]
