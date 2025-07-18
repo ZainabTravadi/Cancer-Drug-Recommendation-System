@@ -1,10 +1,4 @@
-# models/schemas.py
-from pydantic import BaseModel
-from typing import Optional
-
-class RecommendationRequest(BaseModel):
-    cancer_type: str
-    notes: Optional[str] = None
+from pydantic import BaseModel, Field
 
 class DrugRecommendation(BaseModel):
     rank: int
@@ -14,4 +8,9 @@ class DrugRecommendation(BaseModel):
     description: str
     mechanism: str
     side_effects: str
-    clinical_evidence: str
+    clinical_evidence: str = Field(..., alias="clinical_evidence")
+
+    class Config:
+        allow_population_by_field_name = True
+        # Ensures output uses the exact field names as defined above (snake_case)
+        orm_mode = True

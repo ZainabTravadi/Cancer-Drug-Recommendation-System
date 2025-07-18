@@ -2,14 +2,14 @@ import React, { useEffect, useState } from 'react';
 import { Card } from '@/components/ui/card';
 
 type Drug = {
-  id?: string | number;
-  name?: string;
-  confidence?: number;
-  ic50?: string | number;
-  description?: string;
-  mechanism?: string;
-  sideEffects?: string;
-  clinicalTrial?: string;
+  id: string | number;
+  name: string;
+  confidence: number;
+  ic50: string | number;
+  description: string;
+  mechanism: string;
+  side_effects: string;
+  clinical_evidence: string;
 };
 
 type DrugRecommendationsSectionProps = {
@@ -136,11 +136,11 @@ const DrugRecommendationsSection: React.FC<DrugRecommendationsSectionProps> = ({
                     </div>
                     <div className="bg-slate-700/30 rounded-lg p-4">
                       <h4 className="font-semibold text-yellow-300 mb-1">Side Effects</h4>
-                      <p className="text-sm text-slate-300">{drug.sideEffects || 'N/A'}</p>
+                      <p className="text-sm text-slate-300">{drug.side_effects || 'N/A'}</p>
                     </div>
                     <div className="bg-slate-700/30 rounded-lg p-4">
                       <h4 className="font-semibold text-green-300 mb-1">Clinical Evidence</h4>
-                      <p className="text-sm text-slate-300">{drug.clinicalTrial || 'N/A'}</p>
+                      <p className="text-sm text-slate-300">{drug.clinical_evidence || 'N/A'}</p>
                     </div>
                   </div>
                 </div>

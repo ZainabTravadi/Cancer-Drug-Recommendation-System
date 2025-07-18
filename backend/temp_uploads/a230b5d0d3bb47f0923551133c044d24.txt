@@ -1,6 +1,0 @@
-PatientID,Gene,MutationType,Chromosome,Position,Reference,Alternate
-P006,BRAF,V600E,7,140453136,A,T
-P007,HER2,Amplification,17,37880991,C,T
-P008,VEGFR,Overexpression,6,43738956,G,A
-P009,CD19,CD19+ B-cells,16,28939585,A,G
-P010,BTK,BTK mutation,X,100750267,G,A

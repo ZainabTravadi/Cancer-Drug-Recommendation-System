@@ -15,12 +15,19 @@ df = df.applymap(lambda x: x.strip() if isinstance(x, str) else x)
 # Drop rows missing critical fields
 df.dropna(subset=['name', 'target_gene', 'cancer_type', 'ic50', 'confidence'], inplace=True)
 
-# Optional: convert columns to proper types
+# Convert to proper types
 df['confidence'] = pd.to_numeric(df['confidence'], errors='coerce')
 df['ic50'] = pd.to_numeric(df['ic50'], errors='coerce')
 
-# Drop rows with invalid numbers
+# Drop rows with invalid numeric data
 df.dropna(subset=['confidence', 'ic50'], inplace=True)
+
+# Fill non-critical missing values with meaningful defaults
+df['mutation_types'] = df['mutation_types'].fillna("Unknown")
+df['side_effects'] = df['side_effects'].fillna("Not reported")
+df['mechanism'] = df['mechanism'].fillna("Unknown mechanism")
+df['clinical_trial'] = df['clinical_trial'].fillna("Not specified")
+df['approval_status'] = df['approval_status'].fillna("Pending")
 
 # Save clean file
 df.to_csv(output_csv, index=False)

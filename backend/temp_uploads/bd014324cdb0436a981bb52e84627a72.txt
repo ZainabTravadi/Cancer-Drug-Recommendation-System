@@ -1,0 +1,7 @@
+PatientID,Gene,MutationType,Chromosome,Position,Reference,Alternate
+P001,EGFR,Missense,7,55181378,G,A
+P001,PD-1,Overexpression,2,24128945,C,T
+P002,BRAF,V600E,7,140753336,A,T
+P003,HER2,Amplification,17,37880978,G,A
+P004,VEGFR,Deletion,6,43770363,T,-
+P005,CD19,Splice_Site,16,11513222,G,C
