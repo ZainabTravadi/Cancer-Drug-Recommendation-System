@@ -1,6 +1,6 @@
 # 🧬 ChemoChoice: *Personalized Cancer Drug Recommendation System*  
 
-**Empowering precision oncology with AI-driven drug matching**  
+**Empowering precision oncology with Data Science**  
 
 ---
 
