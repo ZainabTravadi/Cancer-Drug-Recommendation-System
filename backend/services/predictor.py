@@ -1,4 +1,4 @@
-#from typing import List, Dict
+from typing import List, Dict
 
 def predict_drug_scores(gene_features: List[str]) -> Dict[str, float]:
     score_table = {
