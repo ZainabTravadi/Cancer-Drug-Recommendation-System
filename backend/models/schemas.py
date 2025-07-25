@@ -12,5 +12,4 @@ class DrugRecommendation(BaseModel):
 
     class Config:
         allow_population_by_field_name = True
-        # Ensures output uses the exact field names as defined above (snake_case)
         orm_mode = True

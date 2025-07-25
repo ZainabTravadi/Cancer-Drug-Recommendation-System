@@ -1,121 +1,98 @@
-# 🧬 Personalized Cancer Drug Treatment: Core Concepts
+# Cancer Pharmacology Basics
 
-## 🎯 What is Personalized Cancer Treatment?
-
-Personalized (or Precision) Cancer Treatment is a therapeutic approach that:
-
-- Tailors drug treatments based on an individual patient’s **genetic, molecular, and cellular profile**.
-- Aims to improve drug efficacy and reduce side effects by avoiding “one-size-fits-all” therapies.
-- Uses data like gene expression, mutations, protein levels, and biomarkers to predict which drugs or drug combinations will work best for a specific patient.
-
-### Key Technologies Involved:
-- **Next-Generation Sequencing (NGS)** to identify mutations.
-- **Transcriptomics** (gene expression levels).
-- **Bioinformatics** to match profiles with drug response data.
+**Notes on Targeted Therapies, Immunotherapies, and Kinase Inhibitors**
 
 ---
 
-## 💡 Why Is It Important?
-
-- Two patients with the same cancer type may respond differently to the same drug.
-- Personalized treatment increases survival rates and reduces unnecessary toxicity.
-- It drives **precision oncology**, integrating AI, omics data, and pharmacology.
-
----
-
-## 🧪 Pharmacological Metrics
+## Key Concepts
+- **Targeted Therapy**: Drugs targeting specific genetic mutations or pathways in cancer cells.
+- **Immunotherapy**: Agents that modulate the immune system to attack tumors.
+- **IC50**: Drug concentration needed to inhibit 50% of target activity (lower = more potent).
+- **FDA-Approved**: Standard-of-care treatments with robust clinical evidence.
+- **Investigational**: Drugs in clinical trials (not yet approved).
 
 ---
 
-### 1. **IC50 – Half Maximal Inhibitory Concentration**
+## Drug Classes & Examples
 
-**Definition**:
-> The concentration of a drug at which 50% of the target (e.g., cancer cells) is inhibited or killed.
+### 1. **EGFR Inhibitors**
+- **Mechanism**: Block EGFR signaling in tumors with activating mutations.
+- **Examples**:
+  - *Osimertinib*: Targets T790M mutation in NSCLC (IC50: 0.15 nM).
+  - *Erlotinib*: For EGFR L858R/exon 19 del (IC50: 0.019 nM).
 
-- It's a **dose-response metric**: lower IC50 → higher potency.
-- Used to **quantify how sensitive a cell line or tumor is** to a drug.
+### 2. **ALK/ROS1 Inhibitors**
+- **Mechanism**: Inhibit ALK/ROS1 fusion proteins.
+- **Examples**:
+  - *Crizotinib*: First-gen ALK/ROS1/MET inhibitor (IC50: 0.3 nM).
+  - *Lorlatinib*: 3rd-gen, crosses blood-brain barrier (IC50: 0.02 nM).
 
-**Interpretation**:
-- **Low IC50 (<1 µM)** → Highly sensitive → Drug is very effective.
-- **High IC50 (>10 µM)** → Low sensitivity → Drug less effective.
+### 3. **PARP Inhibitors**
+- **Mechanism**: Block DNA repair in BRCA-mutated tumors.
+- **Examples**:
+  - *Olaparib*: Broad use in BRCA+ cancers (IC50: 0.09 nM).
+  - *Talazoparib*: Most potent PARP1/2 inhibitor (IC50: 0.57 nM).
 
-**Relevance to ML Models**:
-- IC50 is often used as a **target label** in regression tasks.
-- Helps train models to predict how sensitive a cancer cell is to a specific drug.
+### 4. **BRAF/MEK Inhibitors**
+- **Mechanism**: Target MAPK pathway in BRAF V600E mutations.
+- **Examples**:
+  - *Dabrafenib* + *Trametinib*: Combo for melanoma (IC50: 0.006 nM / 0.05 nM).
 
----
+### 5. **Immune Checkpoint Inhibitors**
+- **Mechanism**: Block PD-1/PD-L1/CTLA-4 to reactivate T-cells.
+- **Examples**:
+  - *Pembrolizumab*: PD-1 inhibitor for MSI-H/dMMR tumors (IC50: 0.15 nM).
+  - *Ipilimumab*: CTLA-4 inhibitor (IC50: 0.22 nM).
 
-### 2. **AUC – Area Under the Dose-Response Curve**
+### 6. **Antibody-Drug Conjugates (ADCs)**
+- **Mechanism**: Targeted delivery of cytotoxic payloads.
+- **Examples**:
+  - *Trastuzumab deruxtecan*: HER2-targeted ADC (IC50: 0.04 nM).
+  - *Sacituzumab govitecan*: TROP-2 ADC for TNBC (IC50: 0.3 nM).
 
-**Definition**:
-> AUC quantifies the total drug effect over a range of concentrations in a dose-response curve.
+### 7. **BCR-ABL Inhibitors**
+- **Mechanism**: Target BCR-ABL fusion in CML.
+- **Examples**:
+  - *Imatinib*: First TKI (IC50: 0.58 nM).
+  - *Ponatinib*: For T315I resistance (IC50: 0.08 nM).
 
-- Integrates the full dose-response curve, not just a single point (like IC50).
-- **Lower AUC = more effective drug** (steeper and lower curve).
-
-**Comparison with IC50**:
-| IC50   | Single dose point | Measures potency |
-| AUC    | Whole response curve | Measures overall sensitivity |
-
-**Use in ML**:
-- AUC can be used as an alternative or complementary label to IC50.
-- Often used in classification tasks (e.g., sensitive vs resistant).
-
----
-
-### 3. **Drug Synergy**
-
-**Definition**:
-> When two or more drugs work **better together** than the sum of their individual effects.
-
-- A **synergistic drug pair** may require lower doses, reducing toxicity.
-- Used in **combination therapy**, which is crucial in treating advanced cancers.
-
-**Quantitative Models for Synergy**:
-- **Bliss Independence**: Based on probabilistic independence.
-- **Loewe Additivity**: Assumes drugs with the same mechanism should be additive.
-- **ZIP Model (Zero Interaction Potency)**: Compares observed and expected interactions.
-
-**Interpretation**:
-- **Synergy Score > 0** → Synergistic
-- **Synergy Score ≈ 0** → Additive
-- **Synergy Score < 0** → Antagonistic
-
-**Use in ML/DL**:
-- Can train models to predict **synergy scores** from molecular and genomic features of two drugs + cell line.
+### 8. **IDH Inhibitors**
+- **Mechanism**: Block mutant IDH1/2 enzymes in AML.
+- **Examples**:
+  - *Ivosidenib*: IDH1 R132H inhibitor (IC50: 0.07 nM).
 
 ---
 
-## 🧬 Public Datasets Used in Research
-
-| **GDSC**    | Genomics of Drug Sensitivity in Cancer – cell line screening data           | IC50, AUC, mutations, expression |
-
-| **CellMiner** | NCI-60 cancer cell lines, includes gene expression + 20,000+ compounds     | IC50, AUC, RNA/protein data |
-
-| **TCGA**     | The Cancer Genome Atlas – real patient tumor genomics + clinical outcomes  | Gene expression, survival data |
+## Clinical Evidence Highlights
+| Drug            | Trial Name       | Evidence Summary                          |
+|-----------------|-----------------|------------------------------------------|
+| Osimertinib     | FLAURA Phase III | Improved survival in EGFR T790M NSCLC.   |
+| Olaparib        | OlympiAD        | Efficacy in BRCA-mutated breast cancer.  |
+| Nivolumab       | CheckMate-067   | Durable responses in melanoma.           |
+| Dabrafenib      | BREAK-3         | Improved PFS in BRAF V600E melanoma.     |
 
 ---
 
-## 📘 Summary Table
+## Side Effects Overview
+- **Common**: Fatigue, rash, diarrhea, nausea.
+- **Severe**: 
+  - *Cardiotoxicity* (Trastuzumab).
+  - *Interstitial lung disease* (Trastuzumab deruxtecan).
+  - *Immune-related toxicities* (PD-1 inhibitors).
 
-| **IC50**    | Drug concentration at which 50% of the target is inhibited              | Regression label   |
-| **AUC**     | Overall effect of drug across all concentrations                        | Regression/Ranking |
-| **Synergy** | Combined drug effect greater than individual drugs                      | Classification/Ranking |
-| **GDSC**    | Drug screening on cancer cell lines                                     | Source of training data |
-| **CellMiner** | Cell line drug response + gene expression                             | Model fine-tuning  |
-| **TCGA**    | Patient genomics and survival outcomes                                  | Model validation   |
+---
 
-## 🛠 How This Ties Into Your Project
+## Approval Status
+- **FDA-Approved**: 49/60 drugs (e.g., Pembrolizumab, Atezolizumab).
+- **Investigational**: 11/60 drugs (e.g., Merestinib, Foretinib).
 
-- Use IC50/AUC as **ground truth labels** to predict drug effectiveness.
-- Use synergy scores to build models that suggest **optimal drug pairs**.
-- Use genomic data (gene expression, mutations) as **input features**.
-- These metrics provide **explainable outputs** to clinicians or researchers.
+---
 
-## 🔗 Recommended Reading Links
+## References
+- Clinical trials: NCT IDs, FDA labels, and peer-reviewed publications.
+- **IC50 Values**: Lower values indicate higher potency.
+- **Confidence Scores**: Reflect clinical validation (scale: 0–100).
 
-- [NCBI: Pharmacogenomics Overview](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC7860563/)
-- [NIH: What Is Precision Medicine?](https://www.cancer.gov/about-cancer/treatment/types/precision-medicine)
-- [GDSC Resource](https://www.cancerrxgene.org)
-- [CellMiner](https://discover.nci.nih.gov/cellminer)
-- [TCGA Data Portal](https://portal.gdc.cancer.gov)
+---
+*Last updated: July 2025*  
+*Data source: Curated oncology drug database*

@@ -19,10 +19,6 @@ def validate_extension(ext: str):
         raise ValueError(f"❌ Unsupported file type: {ext}")
 
 async def save_temp_file(file: UploadFile, destination: Literal["temp", "uploads"] = "temp") -> str:
-    """
-    Saves the uploaded file temporarily and returns the path.
-    Handles .vcf/.csv/.txt and checks format.
-    """
     ext = get_extension(file)
     validate_extension(ext)
 

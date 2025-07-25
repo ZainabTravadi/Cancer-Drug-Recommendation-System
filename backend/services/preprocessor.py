@@ -4,15 +4,7 @@ import pandas as pd
 SUPPORTED_EXTENSIONS = [".txt", ".csv", ".vcf"]
 
 def preprocess_file(file_path: str) -> list[str]:
-    """
-    Preprocess the uploaded genomic file and extract gene/mutation features.
 
-    Args:
-        file_path (str): Path to the saved genomic file.
-
-    Returns:
-        List of gene names or features (List[str])
-    """
     ext = os.path.splitext(file_path)[-1].lower()
 
     if ext not in SUPPORTED_EXTENSIONS:
