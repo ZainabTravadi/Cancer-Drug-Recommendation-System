@@ -7,13 +7,13 @@ const FAQSection = () => {
   const faqs = [
     {
       id: "accuracy",
-      question: "How accurate are the AI drug recommendations?",
-      answer: "Our AI model achieves 94.2% accuracy based on validation against clinical outcomes from over 50,000 cancer patients. The system is continuously updated with the latest clinical trial data and genomic research to maintain high precision in recommendations."
+      question: "Is this a real medical application?",
+      answer: "No, this is a demonstration project created for educational purposes only. The drug recommendations and genomic analysis shown are simulated and should not be used for actual medical decisions. Always consult with a qualified healthcare provider for medical advice."
     },
     {
       id: "data-security",
-      question: "How is my genomic data protected?",
-      answer: "We employ bank-level encryption (AES-256) and comply with HIPAA, GDPR, and genomic data protection standards. Your data is processed in secure, isolated environments and is never shared with third parties. All data is automatically deleted after analysis unless you explicitly opt for storage."
+      question: "Where does the sample data come from?",
+      answer: "The genomic and drug data in this project is synthesized from publicly available research datasets and clinical trial information. No real patient data is used in this demonstration. All patient IDs and genomic profiles are fictional examples."
     },
     {
       id: "upload-formats",
@@ -23,27 +23,22 @@ const FAQSection = () => {
     {
       id: "processing-time", 
       question: "How long does the analysis take?",
-      answer: "Initial analysis typically completes within 5-10 minutes for standard genomic files. Complex whole-genome sequencing data may take up to 30 minutes. You'll receive real-time progress updates and can download preliminary results as they become available."
+      answer: "Initial analysis typically completes within 5 minutes for standard genomic files."
     },
     {
-      id: "clinical-validation",
-      question: "Are these recommendations clinically validated?",
-      answer: "Yes, our recommendations are based on FDA-approved drugs and clinical trial data. However, these are AI-generated suggestions for discussion with your oncologist, not direct medical advice. Always consult with your healthcare provider before making treatment decisions."
+      id: "limitations",
+      question: "What are the key limitations of this demo?",
+      answer: "1) No real patient data processing 2) Simplified mock algorithms 3) Static dataset 4) No HIPAA compliance needed (as it's a demo) 5) Treatment timelines/outcomes are completely simulated."
     },
     {
-      id: "cost-coverage",
-      question: "Will insurance cover the recommended treatments?",
-      answer: "Coverage varies by insurance provider and specific drugs. Our system includes insurance likelihood scores for each recommendation and can generate prior authorization support documents. We also provide information about patient assistance programs and clinical trial opportunities."
+      id: "extension",
+      question: "How could this be extended for real clinical use?",
+      answer: "To make this production-ready would require: 1) Integration with real genomic pipelines 2) FDA-approved algorithms 3) HIPAA-compliant infrastructure 4) Clinician validation workflows 5) Ongoing clinical trial data integration."
     },
     {
-      id: "rare-cancers",
-      question: "Does the system work for rare cancer types?",
-      answer: "Our AI is trained on data from 200+ cancer subtypes, including many rare cancers. For ultra-rare conditions with limited data, the system uses pathway-based analysis and cross-cancer drug repositioning to provide the best possible recommendations."
-    },
-    {
-      id: "updates",
-      question: "How often are recommendations updated?",
-      answer: "The AI model is retrained monthly with new clinical trial data, drug approvals, and genomic discoveries. Your stored profile is automatically re-analyzed when significant updates occur, and you'll be notified of any changes to your recommendations."
+      id: "contributing",
+      question: "Can I contribute to or modify this project?",
+      answer: "Yes! This is an open-source educational project."
     }
   ];
 
@@ -84,16 +79,22 @@ const FAQSection = () => {
           <div className="bg-gradient-to-r from-violet-500/10 to-pink-500/10 rounded-xl p-8 border border-violet-500/20">
             <h3 className="text-2xl font-bold text-white mb-4">Still have questions?</h3>
             <p className="text-slate-300 mb-6">
-              Our team of geneticists and oncologists is here to help you understand your results
+              Feel free to reach out to understand the project or discuss improvements.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <button className="neon-button">
-                📧 Contact Support Team
-              </button>
-              <button className="bg-transparent border-2 border-violet-500/50 text-violet-300 font-semibold py-3 px-8 rounded-lg hover:bg-violet-500/10 transition-all duration-300">
-                📞 Schedule Consultation
-              </button>
-            </div>
+  <a
+    href="https://www.linkedin.com/in/zainab-travadi-119a83373" 
+    target="_blank"
+    rel="noopener noreferrer"
+    className="neon-button">
+    💼 Connect on LinkedIn
+  </a>
+  <a
+    href="mailto:zainabtravadi421@gmail.com"
+    className="bg-transparent border-2 border-violet-500/50 text-violet-300 font-semibold py-3 px-8 rounded-lg hover:bg-violet-500/10 transition-all duration-300">
+    📧 Email Me
+  </a>
+</div>
           </div>
         </div>
       </div>

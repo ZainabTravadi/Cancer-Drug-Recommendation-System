@@ -2,6 +2,7 @@
 import React, { useState } from 'react';
 import { Card } from '@/components/ui/card';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
+import PerformanceMetrics from './ui/metrics';
 
 const AIExplainabilitySection = () => {
   const [expandedSection, setExpandedSection] = useState<string | null>(null);
@@ -11,81 +12,119 @@ const AIExplainabilitySection = () => {
       id: "genomic-analysis",
       title: "Genomic Profile Analysis",
       icon: "🧬",
-      description: "How your genetic data influenced the recommendations",
+      description: "How genetic markers influence drug effectiveness",
       details: [
         {
-          factor: "BRCA1/2 Mutations",
+          factor: "EGFR T790M Mutation",
           impact: "High",
-          explanation: "Detected pathogenic variants in BRCA1 (c.5266dupC) increase sensitivity to PARP inhibitors like Olaparib by 340%",
-          confidence: 96
+          explanation: "Presence of T790M mutation increases sensitivity to Osimertinib by 78% compared to wild-type EGFR",
+          confidence: 97,
+          relatedDrugs: [1, 13, 27]
         },
         {
-          factor: "HER2 Expression",
-          impact: "High", 
-          explanation: "Overexpression of HER2 protein (3+ by IHC) makes Trastuzumab highly effective with 85% response rate",
-          confidence: 94
+          factor: "BRCA1/2 Pathogenic Variants", 
+          impact: "High",
+          explanation: "Germline BRCA mutations confer 92% response rate to PARP inhibitors like Olaparib",
+          confidence: 95,
+          relatedDrugs: [2, 47, 48, 49]
         },
         {
-          factor: "PD-L1 Status",
-          impact: "Medium",
-          explanation: "PD-L1 expression level of 65% suggests strong response to immune checkpoint inhibitors",
-          confidence: 89
-        }
-      ]
-    },
-    {
-      id: "pathway-analysis", 
-      title: "Molecular Pathway Impact",
-      icon: "🔬",
-      description: "Critical pathways affected by identified mutations",
-      details: [
-        {
-          factor: "DNA Repair Pathway",
+          factor: "HER2 Amplification",
           impact: "Critical",
-          explanation: "Homologous recombination deficiency score of 42 indicates synthetic lethality with PARP inhibition",
-          confidence: 92
-        },
-        {
-          factor: "EGFR Signaling",
-          impact: "Medium",
-          explanation: "Wild-type EGFR with no resistance mutations supports TKI therapy effectiveness",
-          confidence: 87
-        },
-        {
-          factor: "Angiogenesis",
-          impact: "Medium",
-          explanation: "VEGF pathway activation score suggests anti-angiogenic therapy benefits",
-          confidence: 83
+          explanation: "HER2 3+ overexpression by IHC makes Trastuzumab first-line therapy with 89% response rate",
+          confidence: 98,
+          relatedDrugs: [4, 11, 37, 38]
         }
       ]
     },
     {
-      id: "drug-interactions",
-      title: "Drug Interaction Predictions", 
-      icon: "⚗️",
-      description: "AI-predicted drug synergies and contraindications",
+      id: "pathway-activity", 
+      title: "Pathway Activation Analysis",
+      icon: "🔄",
+      description: "Key signaling pathways affecting treatment options",
       details: [
         {
-          factor: "Pembrolizumab + Chemotherapy",
-          impact: "Synergistic",
-          explanation: "Combination therapy shows 23% improvement in progression-free survival vs monotherapy",
-          confidence: 91
+          factor: "MAPK Pathway Activation",
+          impact: "High",
+          explanation: "BRAF V600E mutation drives constitutive MAPK signaling, making Dabrafenib/Trametinib combination 85% effective",
+          confidence: 93,
+          relatedDrugs: [5, 6, 34, 35, 36]
         },
         {
-          factor: "Olaparib + Bevacizumab",
-          impact: "Additive",
-          explanation: "Dual targeting of DNA repair and angiogenesis pathways shows enhanced efficacy",
-          confidence: 86
+          factor: "PD-1/PD-L1 Axis",
+          impact: "Moderate",
+          explanation: "Tumor proportion score ≥50% predicts 62% response rate to Pembrolizumab monotherapy",
+          confidence: 88,
+          relatedDrugs: [7, 8, 51, 52]
         },
         {
-          factor: "CYP2D6 Polymorphisms",
-          impact: "Caution",
-          explanation: "Poor metabolizer genotype may require dose adjustments for certain agents",
-          confidence: 78
+          factor: "Angiogenesis Signaling",
+          impact: "Moderate",
+          explanation: "VEGF pathway activation score of 7.2 suggests benefit from Axitinib or Cabozantinib",
+          confidence: 82,
+          relatedDrugs: [12, 14, 19, 29]
         }
       ]
-    }
-  ];
+    },
+    {
+      id: "drug-mechanisms",
+      title: "Drug Mechanism Insights", 
+      icon: "⚗️",
+      description: "Key pharmacological factors influencing recommendations",
+      details: [
+        {
+          factor: "Blood-Brain Barrier Penetration",
+          impact: "Critical",
+          explanation: "Alectinib and Lorlatinib show 10x greater CNS penetration than 1st-gen ALK inhibitors for brain metastases",
+          confidence: 94,
+          relatedDrugs: [31, 32]
+        },
+        {
+          factor: "Resistance Mutation Coverage",
+          impact: "High",
+          explanation: "Ponatinib and Asciminib maintain activity against T315I gatekeeper mutation in BCR-ABL",
+          confidence: 91,
+          relatedDrugs: [44, 30]
+        },
+        {
+          factor: "ADC Payload Efficiency",
+          impact: "High",
+          explanation: "Trastuzumab deruxtecan demonstrates 8:1 drug-to-antibody ratio with membrane-permeable payload",
+          confidence: 89,
+          relatedDrugs: [57]
+        }
+      ]
+    },
+    {
+      id: "clinical-context",
+      title: "Clinical Considerations",
+      icon: "🏥",
+      description: "Patient-specific factors affecting treatment selection",
+      details: [
+        {
+          factor: "Prior Treatment History",
+          impact: "High",
+          explanation: "Progressed on 1st-line EGFR TKI increases likelihood of T790M-mediated resistance (68% prevalence)",
+          confidence: 90,
+          relatedDrugs: [1, 27]
+        },
+        {
+          factor: "Comorbidity Profile",
+          impact: "Moderate",
+          explanation: "Pre-existing cardiac conditions may contraindicate HER2 therapies with cardiotoxicity risk",
+          confidence: 85,
+          relatedDrugs: [4, 38]
+        },
+        {
+          factor: "Biomarker Dynamics",
+          impact: "Emerging",
+          explanation: "On-treatment ctDNA clearance by cycle 2 predicts 89% PFS at 12 months with PARP inhibitors",
+          confidence: 78,
+          relatedDrugs: [2, 47, 48, 49]
+        }
+      ]
+    },
+];
 
   const getImpactColor = (impact: string) => {
     switch (impact.toLowerCase()) {
@@ -159,29 +198,7 @@ const AIExplainabilitySection = () => {
           ))}
         </div>
 
-        <div className="mt-12 text-center">
-          <div className="bg-slate-800/50 rounded-xl p-6 border border-violet-500/20">
-            <h3 className="text-xl font-bold text-violet-300 mb-3">Model Performance Metrics</h3>
-            <div className="grid md:grid-cols-4 gap-4">
-              <div className="text-center">
-                <div className="text-2xl font-bold text-green-400">94.2%</div>
-                <div className="text-sm text-slate-400">Accuracy</div>
-              </div>
-              <div className="text-center">
-                <div className="text-2xl font-bold text-blue-400">91.8%</div>
-                <div className="text-sm text-slate-400">Precision</div>
-              </div>
-              <div className="text-center">
-                <div className="text-2xl font-bold text-yellow-400">89.5%</div>
-                <div className="text-sm text-slate-400">Recall</div>
-              </div>
-              <div className="text-center">
-                <div className="text-2xl font-bold text-pink-400">0.87</div>
-                <div className="text-sm text-slate-400">F1-Score</div>
-              </div>
-            </div>
-          </div>
-        </div>
+        <PerformanceMetrics />
       </div>
     </section>
   );
