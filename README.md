@@ -61,7 +61,7 @@ npm run dev
 ```  
 To use backend API (Navigate to backend folder, then run):  
 ```powershell
-uvicorn api:app --reload 
+uvicorn main:app --reload 
 ``` 
 Or (If uvicorn is not in your system's path)
 ``` 
