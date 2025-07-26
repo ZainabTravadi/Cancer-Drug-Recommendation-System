@@ -7,7 +7,6 @@ import os
 
 app = FastAPI()
 
-# CORS
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
@@ -16,18 +15,17 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# Mount API first
 @app.get("/status")
 def api_status():
-    return {"message": "✅ Backend and frontend working."}
+    return {"message": "Backend and frontend working."}
 
 app.include_router(analyze_router)
 
-# Set up static frontend serving
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 FRONTEND_DIST = os.path.join(BASE_DIR, "dist")
+ASSETS_DIR = os.path.join(FRONTEND_DIST, "assets")
 
-app.mount("/static", StaticFiles(directory=os.path.join(FRONTEND_DIST, "assets")), name="static")
+app.mount("/static", StaticFiles(directory=ASSETS_DIR), name="static")
 
 @app.get("/")
 async def serve_index():
@@ -36,3 +34,8 @@ async def serve_index():
 @app.get("/{full_path:path}")
 async def catch_all(full_path: str):
     return FileResponse(os.path.join(FRONTEND_DIST, "index.html"))
+
+if __name__ == "__main__":
+    import uvicorn
+    port = int(os.environ.get("PORT", 8000))
+    uvicorn.run("main:app", host="0.0.0.0", port=port)
