@@ -1,13 +1,21 @@
-﻿# Ignore virtual environment
+﻿# === Python ===
 venv/
+__pycache__/
+*.py[cod]
 
-# Ignore raw and large data files
-data/
+# Jupyter
+.ipynb_checkpoints/
 
-# Ignore large binary formats and model weights
+# Logs
+*.log
+
+# System files
+.DS_Store
+Thumbs.db
+
+# === Model weights / binaries ===
 *.dll
 *.lib
-*.csv
 *.zip
 *.tar.gz
 *.h5
@@ -15,17 +23,15 @@ data/
 *.pkl
 *.ckpt
 
-# Ignore Jupyter Notebook checkpoints
-.ipynb_checkpoints/
+# === Data ===
+# Ignore all .csv by default
+*.csv
 
-# Ignore log files
-*.log
+# But KEEP this specific one:
+!data/raw/GDSC/public_raw_data/public_raw_data_gdsc2.csv
 
-# Ignore system files
-.DS_Store
-Thumbs.db
-
-# Python cache
-__pycache__/
-*.py[cod]
-data/raw/GDSC/public_raw_data/public_raw_data_gdsc2.csv
+# And also UNIGNORE the folders leading to it
+!data/
+!data/raw/
+!data/raw/GDSC/
+!data/raw/GDSC/public_raw_data/
