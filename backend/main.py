@@ -7,7 +7,7 @@ import os
 
 app = FastAPI()
 
-# Allow CORS
+# CORS (safe for now, restrict in production)
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
@@ -16,22 +16,25 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# Get absolute paths safely
+# ✅ Now using backend/dist (since dist is inside backend now)
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-FRONTEND_DIR = os.path.abspath(os.path.join(BASE_DIR, "../neo-med-navigator"))
+FRONTEND_DIST = os.path.join(BASE_DIR, "dist")
 
-# Mount static folder
-app.mount("/static", StaticFiles(directory=FRONTEND_DIR), name="static")
+app.mount("/", StaticFiles(directory=FRONTEND_DIST, html=True), name="static")
 
-# Serve index.html at root
 @app.get("/")
 async def serve_index():
-    return FileResponse(os.path.join(FRONTEND_DIR, "index.html"))
+    return FileResponse(os.path.join(FRONTEND_DIST, "index.html"))
 
-# Optional API health check
+# ✅ Optional: handle React Router routes (like /dashboard, /result)
+@app.get("/{full_path:path}")
+async def catch_all(full_path: str):
+    return FileResponse(os.path.join(FRONTEND_DIST, "index.html"))
+
+# Health check
 @app.get("/status")
 def api_status():
-    return {"message": "✅ Cancer Drug Recommendation API is running."}
+    return {"message": "✅ Backend and frontend working."}
 
-# Include /analyze routes
+# API routes
 app.include_router(analyze_router)
