@@ -5,16 +5,12 @@ matplotlib
 seaborn
 torch
 torch-geometric
-rdkit
 tqdm
 shap
 captum
 networkx
 scipy
 openpyxl
-jupyterlab
 fastapi
 uvicorn
 python-multipart
-
-
