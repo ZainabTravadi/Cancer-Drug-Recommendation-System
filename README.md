@@ -24,7 +24,7 @@
 ### Steps  
 1. Clone the repo:  
    ```bash  
-   git clone https://github.com/ZainabTravadi/Cancer-Drug.git  
+   https://github.com/ZainabTravadi/Cancer-Drug-Recommendation-System.git  
    ```  
 2. Install dependencies:  
    ```bash  
@@ -117,3 +117,4 @@ For questions:
 **Made with ❤️ for precision oncology**  
 
 ---
+
