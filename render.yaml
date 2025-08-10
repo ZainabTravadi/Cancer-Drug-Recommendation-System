@@ -1,0 +1,15 @@
+services:
+  - type: web
+    name: cancer-drug-recommendation-system
+    env: python
+    buildCommand: |
+      pip install -r backend/requirements.txt
+      cd neo-med-navigator
+      npm install
+      npm run build -- --outDir ../backend/dist
+    startCommand: |
+      cd backend
+      python -m uvicorn main:app --host 0.0.0.0 --port $PORT
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.11

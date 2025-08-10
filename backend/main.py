@@ -25,7 +25,8 @@ BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 FRONTEND_DIST = os.path.join(BASE_DIR, "dist")
 ASSETS_DIR = os.path.join(FRONTEND_DIST, "assets")
 
-app.mount("/static", StaticFiles(directory=ASSETS_DIR), name="static")
+app.mount("/assets", StaticFiles(directory=ASSETS_DIR), name="assets")
+
 
 @app.get("/")
 async def serve_index():
